@@ -23,6 +23,7 @@ import debtPayoff from "./debt-payoff.mjs";
 import rentVsBuy from "./rent-vs-buy.mjs";
 import studentLoan from "./student-loan.mjs";
 import dti from "./dti.mjs";
+import refinance from "./refinance.mjs";
 import fire from "./fire.mjs";
 import rothIra from "./roth-ira.mjs";
 import retirementWithdrawal from "./retirement-withdrawal.mjs";
@@ -53,6 +54,7 @@ export const calculators = [
   rothIra,
   retirementWithdrawal,
   mortgage,
+  refinance,
   downPayment,
   loan,
   autoLoan,
