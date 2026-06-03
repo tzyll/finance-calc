@@ -20,9 +20,11 @@ import whatIsGoodCreditScore from "./what-is-a-good-credit-score.mjs";
 import stopPaycheckToPaycheck from "./stop-living-paycheck-to-paycheck.mjs";
 import payOffDebtOrInvest from "./pay-off-debt-or-invest.mjs";
 import dollarCostAveraging from "./dollar-cost-averaging.mjs";
+import shouldYouRefinance from "./should-you-refinance.mjs";
 
 // Newest first.
 export const articles = [
+  shouldYouRefinance,
   dollarCostAveraging,
   payOffDebtOrInvest,
   stopPaycheckToPaycheck,
