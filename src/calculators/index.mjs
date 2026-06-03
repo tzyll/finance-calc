@@ -37,6 +37,7 @@ import investment from "./investment.mjs";
 import millionaire from "./millionaire.mjs";
 import apy from "./apy.mjs";
 import savingsRate from "./savings-rate.mjs";
+import presentValue from "./present-value.mjs";
 
 export const calculators = [
   compoundInterest,
@@ -50,6 +51,7 @@ export const calculators = [
   ruleOf72,
   simpleInterest,
   apy,
+  presentValue,
   inflation,
   cd,
   netWorth,
