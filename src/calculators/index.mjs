@@ -21,9 +21,11 @@ import debtPayoff from "./debt-payoff.mjs";
 import rentVsBuy from "./rent-vs-buy.mjs";
 import studentLoan from "./student-loan.mjs";
 import fire from "./fire.mjs";
+import investment from "./investment.mjs";
 
 export const calculators = [
   compoundInterest,
+  investment,
   savingsGoal,
   emergencyFund,
   roi,
