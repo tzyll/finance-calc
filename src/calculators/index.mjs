@@ -17,6 +17,7 @@ import k401 from "./401k.mjs";
 import downPayment from "./down-payment.mjs";
 import hourlyToSalary from "./hourly-to-salary.mjs";
 import budget from "./budget.mjs";
+import payRaise from "./pay-raise.mjs";
 import debtPayoff from "./debt-payoff.mjs";
 import rentVsBuy from "./rent-vs-buy.mjs";
 import studentLoan from "./student-loan.mjs";
@@ -38,6 +39,7 @@ export const calculators = [
   netWorth,
   hourlyToSalary,
   budget,
+  payRaise,
   retirement,
   fire,
   k401,
