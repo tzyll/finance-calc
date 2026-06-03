@@ -96,4 +96,5 @@ export default {
     },
   ],
   related: ["compound-interest-calculator", "retirement-savings-calculator"],
+  cta: { key: "personalLoan", text: "Compare personal loan offers" },
 };

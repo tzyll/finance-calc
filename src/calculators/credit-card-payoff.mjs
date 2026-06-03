@@ -99,4 +99,5 @@ export default {
     },
   ],
   related: ["loan-calculator", "savings-goal-calculator"],
+  cta: { key: "balanceTransfer", text: "See 0% balance-transfer cards" },
 };

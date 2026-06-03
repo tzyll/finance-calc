@@ -96,4 +96,5 @@ export default {
     },
   ],
   related: ["compound-interest-calculator", "loan-calculator"],
+  cta: { key: "brokerage", text: "Open a retirement account" },
 };

@@ -94,4 +94,5 @@ export default {
     },
   ],
   related: ["loan-calculator", "compound-interest-calculator"],
+  cta: { key: "mortgageRates", text: "Compare today's mortgage rates" },
 };

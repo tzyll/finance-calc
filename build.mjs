@@ -1,7 +1,7 @@
 import { mkdir, writeFile, rm, copyFile, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { site, categories } from "./src/config.mjs";
+import { site, categories, affiliateLinks } from "./src/config.mjs";
 import { calculators } from "./src/calculators/index.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -19,6 +19,12 @@ function adScript() {
 function adSlot() {
   if (!site.adsensePublisherId) return "";
   return `<div class="ad-slot"><ins class="adsbygoogle" style="display:block" data-ad-client="${site.adsensePublisherId}" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>`;
+}
+function ctaBlock(c) {
+  if (!c.cta) return "";
+  const url = affiliateLinks[c.cta.key];
+  if (!url) return ""; // dormant until an affiliate URL is set
+  return `<a class="cta-button" href="${url}" target="_blank" rel="sponsored noopener">${c.cta.text} →</a>`;
 }
 
 function layout({ title, description, canonical, jsonld, body }) {
@@ -140,6 +146,7 @@ function renderCalc(c) {
 
     <div class="calc-card"><div id="calc"></div></div>
 
+    ${ctaBlock(c)}
     ${adSlot()}
 
     <div class="content">${c.content}</div>
@@ -227,6 +234,9 @@ async function build() {
   await writeFile(join(DIST, "sitemap.xml"), renderSitemap());
   await writeFile(join(DIST, "robots.txt"), renderRobots());
   await writeFile(join(DIST, ".nojekyll"), ""); // tell GitHub Pages not to run Jekyll
+  if (site.indexNowKey) {
+    await writeFile(join(DIST, `${site.indexNowKey}.txt`), site.indexNowKey); // IndexNow ownership proof
+  }
 
   console.log(`Built ${calculators.length} calculators + homepage → dist/`);
   console.log(`Pages: / , ${calculators.map((c) => "/" + c.slug + "/").join(" , ")}`);

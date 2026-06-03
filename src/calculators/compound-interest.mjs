@@ -94,4 +94,5 @@ export default {
     },
   ],
   related: ["retirement-savings-calculator", "loan-calculator"],
+  cta: { key: "brokerage", text: "Open an investing account" },
 };
