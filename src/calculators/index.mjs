@@ -18,6 +18,7 @@ import downPayment from "./down-payment.mjs";
 import hourlyToSalary from "./hourly-to-salary.mjs";
 import budget from "./budget.mjs";
 import payRaise from "./pay-raise.mjs";
+import paycheck from "./paycheck.mjs";
 import debtPayoff from "./debt-payoff.mjs";
 import rentVsBuy from "./rent-vs-buy.mjs";
 import studentLoan from "./student-loan.mjs";
@@ -42,6 +43,7 @@ export const calculators = [
   cd,
   netWorth,
   hourlyToSalary,
+  paycheck,
   budget,
   payRaise,
   retirement,
