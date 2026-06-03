@@ -6,9 +6,11 @@ import howToInvest from "./how-to-start-investing.mjs";
 import howToBudget from "./how-to-make-a-budget.mjs";
 import rothVsTraditional from "./roth-vs-traditional-ira.mjs";
 import howMuchToSave from "./how-much-should-i-save.mjs";
+import howToBuildCredit from "./how-to-build-credit.mjs";
 
 // Newest first.
 export const articles = [
+  howToBuildCredit,
   howMuchToSave,
   rothVsTraditional,
   howToBudget,
