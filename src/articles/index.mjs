@@ -13,9 +13,11 @@ import indexFundsForBeginners from "./index-funds-for-beginners.mjs";
 import whatIsFire from "./what-is-fire-retire-early.mjs";
 import howToNegotiateRaise from "./how-to-negotiate-a-raise.mjs";
 import whereToKeepSavings from "./where-to-keep-savings.mjs";
+import compoundInterestExplained from "./compound-interest-explained.mjs";
 
 // Newest first.
 export const articles = [
+  compoundInterestExplained,
   whereToKeepSavings,
   howToNegotiateRaise,
   whatIsFire,
