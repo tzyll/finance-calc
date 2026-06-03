@@ -42,6 +42,7 @@ export const affiliateLinks = {
 
 export const categories = {
   saving: { name: "Saving & Investing", order: 1 },
-  borrowing: { name: "Loans & Debt", order: 2 },
-  retirement: { name: "Retirement", order: 3 },
+  budgeting: { name: "Budgeting & Income", order: 2 },
+  borrowing: { name: "Loans & Debt", order: 3 },
+  retirement: { name: "Retirement", order: 4 },
 };

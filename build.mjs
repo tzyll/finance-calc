@@ -156,7 +156,7 @@ function renderCalc(c) {
     ${ctaBlock(c)}
     ${adSlot()}
 
-    <div class="content">${c.content}</div>
+    <div class="content">${c.content.replaceAll("{{base}}", base)}</div>
 
     <section class="faq">
       <h2>Frequently asked questions</h2>

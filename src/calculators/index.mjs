@@ -15,6 +15,8 @@ import netWorth from "./net-worth.mjs";
 import emergencyFund from "./emergency-fund.mjs";
 import k401 from "./401k.mjs";
 import downPayment from "./down-payment.mjs";
+import hourlyToSalary from "./hourly-to-salary.mjs";
+import budget from "./budget.mjs";
 
 export const calculators = [
   compoundInterest,
@@ -26,6 +28,8 @@ export const calculators = [
   inflation,
   cd,
   netWorth,
+  hourlyToSalary,
+  budget,
   retirement,
   k401,
   mortgage,
