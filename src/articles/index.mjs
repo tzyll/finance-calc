@@ -8,9 +8,11 @@ import rothVsTraditional from "./roth-vs-traditional-ira.mjs";
 import howMuchToSave from "./how-much-should-i-save.mjs";
 import howToBuildCredit from "./how-to-build-credit.mjs";
 import howToPayStudentLoans from "./how-to-pay-off-student-loans.mjs";
+import howToSaveForHouse from "./how-to-save-for-a-house.mjs";
 
 // Newest first.
 export const articles = [
+  howToSaveForHouse,
   howToPayStudentLoans,
   howToBuildCredit,
   howMuchToSave,
