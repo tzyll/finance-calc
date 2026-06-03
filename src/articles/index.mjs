@@ -9,9 +9,11 @@ import howMuchToSave from "./how-much-should-i-save.mjs";
 import howToBuildCredit from "./how-to-build-credit.mjs";
 import howToPayStudentLoans from "./how-to-pay-off-student-loans.mjs";
 import howToSaveForHouse from "./how-to-save-for-a-house.mjs";
+import indexFundsForBeginners from "./index-funds-for-beginners.mjs";
 
 // Newest first.
 export const articles = [
+  indexFundsForBeginners,
   howToSaveForHouse,
   howToPayStudentLoans,
   howToBuildCredit,
