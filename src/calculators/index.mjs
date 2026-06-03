@@ -32,11 +32,13 @@ import retirementWithdrawal from "./retirement-withdrawal.mjs";
 import investment from "./investment.mjs";
 import millionaire from "./millionaire.mjs";
 import apy from "./apy.mjs";
+import savingsRate from "./savings-rate.mjs";
 
 export const calculators = [
   compoundInterest,
   investment,
   millionaire,
+  savingsRate,
   savingsGoal,
   emergencyFund,
   roi,
