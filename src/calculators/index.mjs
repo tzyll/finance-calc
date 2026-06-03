@@ -9,6 +9,7 @@ import roi from "./roi.mjs";
 import inflation from "./inflation.mjs";
 import cd from "./cd.mjs";
 import autoLoan from "./auto-loan.mjs";
+import carAffordability from "./car-affordability.mjs";
 import simpleInterest from "./simple-interest.mjs";
 import ruleOf72 from "./rule-of-72.mjs";
 import netWorth from "./net-worth.mjs";
@@ -64,6 +65,7 @@ export const calculators = [
   downPayment,
   loan,
   autoLoan,
+  carAffordability,
   creditCardPayoff,
   debtPayoff,
   dti,
