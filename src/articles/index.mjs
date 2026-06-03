@@ -15,9 +15,11 @@ import howToNegotiateRaise from "./how-to-negotiate-a-raise.mjs";
 import whereToKeepSavings from "./where-to-keep-savings.mjs";
 import compoundInterestExplained from "./compound-interest-explained.mjs";
 import the4PercentRule from "./the-4-percent-rule.mjs";
+import howTaxBracketsWork from "./how-tax-brackets-work.mjs";
 
 // Newest first.
 export const articles = [
+  howTaxBracketsWork,
   the4PercentRule,
   compoundInterestExplained,
   whereToKeepSavings,
