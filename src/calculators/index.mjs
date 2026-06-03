@@ -19,6 +19,7 @@ import hourlyToSalary from "./hourly-to-salary.mjs";
 import budget from "./budget.mjs";
 import debtPayoff from "./debt-payoff.mjs";
 import rentVsBuy from "./rent-vs-buy.mjs";
+import studentLoan from "./student-loan.mjs";
 
 export const calculators = [
   compoundInterest,
@@ -40,5 +41,6 @@ export const calculators = [
   autoLoan,
   creditCardPayoff,
   debtPayoff,
+  studentLoan,
   rentVsBuy,
 ];
