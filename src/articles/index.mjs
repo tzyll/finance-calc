@@ -14,9 +14,11 @@ import whatIsFire from "./what-is-fire-retire-early.mjs";
 import howToNegotiateRaise from "./how-to-negotiate-a-raise.mjs";
 import whereToKeepSavings from "./where-to-keep-savings.mjs";
 import compoundInterestExplained from "./compound-interest-explained.mjs";
+import the4PercentRule from "./the-4-percent-rule.mjs";
 
 // Newest first.
 export const articles = [
+  the4PercentRule,
   compoundInterestExplained,
   whereToKeepSavings,
   howToNegotiateRaise,
