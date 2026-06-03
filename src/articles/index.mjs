@@ -16,9 +16,11 @@ import whereToKeepSavings from "./where-to-keep-savings.mjs";
 import compoundInterestExplained from "./compound-interest-explained.mjs";
 import the4PercentRule from "./the-4-percent-rule.mjs";
 import howTaxBracketsWork from "./how-tax-brackets-work.mjs";
+import whatIsGoodCreditScore from "./what-is-a-good-credit-score.mjs";
 
 // Newest first.
 export const articles = [
+  whatIsGoodCreditScore,
   howTaxBracketsWork,
   the4PercentRule,
   compoundInterestExplained,
