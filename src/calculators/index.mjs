@@ -20,6 +20,7 @@ import budget from "./budget.mjs";
 import debtPayoff from "./debt-payoff.mjs";
 import rentVsBuy from "./rent-vs-buy.mjs";
 import studentLoan from "./student-loan.mjs";
+import fire from "./fire.mjs";
 
 export const calculators = [
   compoundInterest,
@@ -34,6 +35,7 @@ export const calculators = [
   hourlyToSalary,
   budget,
   retirement,
+  fire,
   k401,
   mortgage,
   downPayment,
