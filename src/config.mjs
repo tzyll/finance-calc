@@ -32,6 +32,7 @@ export const site = {
 export const affiliateLinks = {
   mortgageRates: "",
   personalLoan: "",
+  autoLoan: "",
   balanceTransfer: "",
   brokerage: "",
 };
