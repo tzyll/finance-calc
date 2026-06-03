@@ -17,9 +17,11 @@ import compoundInterestExplained from "./compound-interest-explained.mjs";
 import the4PercentRule from "./the-4-percent-rule.mjs";
 import howTaxBracketsWork from "./how-tax-brackets-work.mjs";
 import whatIsGoodCreditScore from "./what-is-a-good-credit-score.mjs";
+import stopPaycheckToPaycheck from "./stop-living-paycheck-to-paycheck.mjs";
 
 // Newest first.
 export const articles = [
+  stopPaycheckToPaycheck,
   whatIsGoodCreditScore,
   howTaxBracketsWork,
   the4PercentRule,
