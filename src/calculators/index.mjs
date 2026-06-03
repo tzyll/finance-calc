@@ -22,10 +22,12 @@ import rentVsBuy from "./rent-vs-buy.mjs";
 import studentLoan from "./student-loan.mjs";
 import fire from "./fire.mjs";
 import investment from "./investment.mjs";
+import millionaire from "./millionaire.mjs";
 
 export const calculators = [
   compoundInterest,
   investment,
+  millionaire,
   savingsGoal,
   emergencyFund,
   roi,
