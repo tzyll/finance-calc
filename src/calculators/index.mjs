@@ -19,6 +19,7 @@ import hourlyToSalary from "./hourly-to-salary.mjs";
 import budget from "./budget.mjs";
 import payRaise from "./pay-raise.mjs";
 import paycheck from "./paycheck.mjs";
+import rentAffordability from "./rent-affordability.mjs";
 import debtPayoff from "./debt-payoff.mjs";
 import rentVsBuy from "./rent-vs-buy.mjs";
 import studentLoan from "./student-loan.mjs";
@@ -47,6 +48,7 @@ export const calculators = [
   netWorth,
   hourlyToSalary,
   paycheck,
+  rentAffordability,
   budget,
   payRaise,
   retirement,
