@@ -31,6 +31,7 @@ import fire from "./fire.mjs";
 import rothIra from "./roth-ira.mjs";
 import coastFire from "./coast-fire.mjs";
 import hsa from "./hsa.mjs";
+import rothVs401k from "./roth-vs-traditional-401k.mjs";
 import retirementWithdrawal from "./retirement-withdrawal.mjs";
 import investment from "./investment.mjs";
 import millionaire from "./millionaire.mjs";
@@ -61,6 +62,7 @@ export const calculators = [
   fire,
   coastFire,
   k401,
+  rothVs401k,
   rothIra,
   retirementWithdrawal,
   mortgage,
