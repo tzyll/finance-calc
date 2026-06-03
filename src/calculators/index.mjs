@@ -29,6 +29,7 @@ import refinance from "./refinance.mjs";
 import homeAffordability from "./home-affordability.mjs";
 import fire from "./fire.mjs";
 import rothIra from "./roth-ira.mjs";
+import coastFire from "./coast-fire.mjs";
 import retirementWithdrawal from "./retirement-withdrawal.mjs";
 import investment from "./investment.mjs";
 import millionaire from "./millionaire.mjs";
@@ -56,6 +57,7 @@ export const calculators = [
   payRaise,
   retirement,
   fire,
+  coastFire,
   k401,
   rothIra,
   retirementWithdrawal,
