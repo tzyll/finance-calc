@@ -24,6 +24,7 @@ import studentLoan from "./student-loan.mjs";
 import fire from "./fire.mjs";
 import investment from "./investment.mjs";
 import millionaire from "./millionaire.mjs";
+import apy from "./apy.mjs";
 
 export const calculators = [
   compoundInterest,
@@ -34,6 +35,7 @@ export const calculators = [
   roi,
   ruleOf72,
   simpleInterest,
+  apy,
   inflation,
   cd,
   netWorth,
