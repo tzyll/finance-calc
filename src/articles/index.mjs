@@ -23,9 +23,11 @@ import dollarCostAveraging from "./dollar-cost-averaging.mjs";
 import shouldYouRefinance from "./should-you-refinance.mjs";
 import growYourNetWorth from "./grow-your-net-worth.mjs";
 import avoidLifestyleCreep from "./avoid-lifestyle-creep.mjs";
+import howToBuyACar from "./how-to-buy-a-car.mjs";
 
 // Newest first.
 export const articles = [
+  howToBuyACar,
   avoidLifestyleCreep,
   growYourNetWorth,
   shouldYouRefinance,
