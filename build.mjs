@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { site, categories, affiliateLinks } from "./src/config.mjs";
 import { calculators } from "./src/calculators/index.mjs";
+import { articles } from "./src/articles/index.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = join(__dirname, "dist");
@@ -56,6 +57,7 @@ ${adScript()}
   <a class="logo" href="${base}/">Finance<span>Calc</span></a>
   <nav class="nav">
     <a href="${base}/">Home</a>
+    <a href="${base}/guides/">Guides</a>
     ${calculators.map((c) => `<a href="${base}/${c.slug}/">${c.title.replace(" Calculator", "")}</a>`).join("\n    ")}
   </nav>
 </div></header>
@@ -200,9 +202,93 @@ function renderCalc(c) {
   });
 }
 
+// ---------- guides (blog) ----------
+function fmtDate(d) {
+  return new Date(d + "T00:00:00").toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function renderBlogIndex() {
+  const list = articles
+    .map(
+      (a) => `<a class="post-card" href="${base}/guides/${a.slug}/">
+        <h3>${a.title}</h3>
+        <p class="post-date">${fmtDate(a.date)}</p>
+        <p>${a.excerpt}</p>
+      </a>`
+    )
+    .join("\n");
+  const body = `
+  <section class="hero"><div class="container">
+    <h1>Money Guides</h1>
+    <p>Plain-English guides to saving, investing, and getting out of debt — each paired with a free calculator to run your own numbers.</p>
+  </div></section>
+  <div class="container"><div class="post-list">${list}</div></div>`;
+  return layout({
+    title: `Money Guides – ${site.name}`,
+    description: "Plain-English personal finance guides on saving, investing, retirement, and debt payoff.",
+    canonical: `${site.url}/guides/`,
+    jsonld: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        name: `${site.name} Guides`,
+        url: `${site.url}/guides/`,
+      },
+    ],
+    body,
+  });
+}
+
+function renderArticle(a) {
+  const canonical = `${site.url}/guides/${a.slug}/`;
+  const bodyHtml = a.body.replaceAll("{{base}}", base);
+  const related = (a.related || [])
+    .map((s) => bySlug[s])
+    .filter(Boolean)
+    .map((r) => `<a class="chip" href="${base}/${r.slug}/">${r.title}</a>`)
+    .join("\n");
+  const body = `
+  <article class="calc-page"><div class="container">
+    <div class="breadcrumb"><a href="${base}/">Home</a> › <a href="${base}/guides/">Guides</a> › ${a.title}</div>
+    <h1>${a.title}</h1>
+    <p class="article-meta">Published ${fmtDate(a.date)}</p>
+    <div class="content">${bodyHtml}</div>
+    ${related ? `<section class="related"><h2>Calculators in this guide</h2><div class="related-list">${related}</div></section>` : ""}
+  </div></article>`;
+  return layout({
+    title: a.metaTitle || `${a.title} – ${site.name}`,
+    description: a.metaDescription,
+    canonical,
+    jsonld: [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: a.title,
+        description: a.metaDescription,
+        datePublished: a.date,
+        dateModified: a.date,
+        author: { "@type": "Organization", name: site.author },
+        publisher: { "@type": "Organization", name: site.name },
+        mainEntityOfPage: canonical,
+        url: canonical,
+      },
+    ],
+    body,
+  });
+}
+
 // ---------- sitemap + robots ----------
 function renderSitemap() {
-  const urls = [site.url + "/", ...calculators.map((c) => `${site.url}/${c.slug}/`)];
+  const urls = [
+    site.url + "/",
+    ...calculators.map((c) => `${site.url}/${c.slug}/`),
+    site.url + "/guides/",
+    ...articles.map((a) => `${site.url}/guides/${a.slug}/`),
+  ];
   const today = new Date().toISOString().slice(0, 10);
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -231,6 +317,15 @@ async function build() {
     await writeFile(join(dir, "index.html"), renderCalc(c));
   }
 
+  // Guides (blog)
+  await mkdir(join(DIST, "guides"), { recursive: true });
+  await writeFile(join(DIST, "guides", "index.html"), renderBlogIndex());
+  for (const a of articles) {
+    const dir = join(DIST, "guides", a.slug);
+    await mkdir(dir, { recursive: true });
+    await writeFile(join(dir, "index.html"), renderArticle(a));
+  }
+
   await writeFile(join(DIST, "sitemap.xml"), renderSitemap());
   await writeFile(join(DIST, "robots.txt"), renderRobots());
   await writeFile(join(DIST, ".nojekyll"), ""); // tell GitHub Pages not to run Jekyll
@@ -238,7 +333,7 @@ async function build() {
     await writeFile(join(DIST, `${site.indexNowKey}.txt`), site.indexNowKey); // IndexNow ownership proof
   }
 
-  console.log(`Built ${calculators.length} calculators + homepage → dist/`);
+  console.log(`Built ${calculators.length} calculators + ${articles.length} guides + homepage → dist/`);
   console.log(`Pages: / , ${calculators.map((c) => "/" + c.slug + "/").join(" , ")}`);
 }
 
