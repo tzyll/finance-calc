@@ -58,13 +58,23 @@ The site is ready. Turning it into income needs three things I can't do for you:
 2. **Deploy it (free).** Easiest path: create a Cloudflare Pages / Netlify project
    and drag-drop the `dist/` folder, or connect a git repo with build command
    `npm run build` and output dir `dist`.
-3. **Apply for an ad network once it has content + a little traffic.**
-   - Google AdSense is the default. After approval, paste your publisher id
-     (`ca-pub-…`) into `adsensePublisherId` in `src/config.mjs` and rebuild — ad
-     slots and the script wire up automatically.
-   - Ezoic / Mediavine / Raptive pay more but need traffic thresholds first.
-   - Add affiliate links (brokerages, refinance, credit cards) inside calculator
-     `content` for higher revenue per visit.
+3. **Monetize. Two paths — affiliate is faster, ads are passive:**
+   - **Affiliate (no approval, earns from visitor #1).** Sign up for affiliate
+     programs (a mortgage-rate marketplace, a personal-loan marketplace, a 0%
+     balance-transfer card, a brokerage/robo-advisor) and paste the links into
+     `affiliateLinks` in `src/config.mjs`. Contextual CTA buttons appear on the
+     matching calculators automatically. This is the quickest route to a first
+     real dollar.
+   - **Display ads (passive).** Google AdSense is the default; after approval
+     paste your `ca-pub-…` into `adsensePublisherId` and rebuild — ad slots wire
+     up automatically. Ezoic / Mediavine / Raptive pay more but need traffic first.
+
+Already automated for you (no action needed):
+- **Auto-deploy:** every `git push` to `main` rebuilds and redeploys via GitHub
+  Actions.
+- **Fast indexing:** `node notify-indexnow.mjs` pings Bing/Yandex to crawl all
+  pages immediately (re-run it after adding pages). For Google, add the site to
+  Search Console once for fastest indexing.
 
 Realistic timeline: SEO traffic builds over weeks to a few months. The compounding
 part is that every page you publish keeps working forever with no upkeep.
