@@ -21,9 +21,11 @@ import stopPaycheckToPaycheck from "./stop-living-paycheck-to-paycheck.mjs";
 import payOffDebtOrInvest from "./pay-off-debt-or-invest.mjs";
 import dollarCostAveraging from "./dollar-cost-averaging.mjs";
 import shouldYouRefinance from "./should-you-refinance.mjs";
+import growYourNetWorth from "./grow-your-net-worth.mjs";
 
 // Newest first.
 export const articles = [
+  growYourNetWorth,
   shouldYouRefinance,
   dollarCostAveraging,
   payOffDebtOrInvest,
