@@ -24,9 +24,11 @@ import shouldYouRefinance from "./should-you-refinance.mjs";
 import growYourNetWorth from "./grow-your-net-worth.mjs";
 import avoidLifestyleCreep from "./avoid-lifestyle-creep.mjs";
 import howToBuyACar from "./how-to-buy-a-car.mjs";
+import investingOrderOfOperations from "./investing-order-of-operations.mjs";
 
 // Newest first.
 export const articles = [
+  investingOrderOfOperations,
   howToBuyACar,
   avoidLifestyleCreep,
   growYourNetWorth,
