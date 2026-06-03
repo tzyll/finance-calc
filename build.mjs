@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { site, categories, affiliateLinks } from "./src/config.mjs";
 import { calculators } from "./src/calculators/index.mjs";
 import { articles } from "./src/articles/index.mjs";
+import { pages } from "./src/pages/index.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = join(__dirname, "dist");
@@ -67,7 +68,7 @@ ${body}
 <footer class="site-footer"><div class="container" style="flex-direction:column;align-items:flex-start;">
   <div style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:12px;">
     <span>© ${new Date().getFullYear()} ${site.name}</span>
-    <span>${calculators.map((c) => `<a href="${base}/${c.slug}/">${c.title.replace(" Calculator", "")}</a>`).join(" · ")}</span>
+    <span><a href="${base}/about/">About</a> · <a href="${base}/guides/">Guides</a> · <a href="${base}/privacy/">Privacy</a> · <a href="${base}/terms/">Terms</a> · <a href="${base}/contact/">Contact</a></span>
   </div>
   <p class="disclaimer">${site.name} provides free educational tools and general information only. It is not financial, investment, tax, or legal advice. Calculations are estimates based on the inputs you provide and do not guarantee future results. Consult a qualified professional before making financial decisions.</p>
 </div></footer>
@@ -202,6 +203,34 @@ function renderCalc(c) {
   });
 }
 
+// ---------- static pages (about / contact / privacy / terms) ----------
+function renderPage(p) {
+  const canonical = `${site.url}/${p.slug}/`;
+  const updated = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  const contactBlock = site.contactEmail
+    ? `You can reach us at <a href="mailto:${site.contactEmail}">${site.contactEmail}</a>.`
+    : `<em>A contact email will be published here. (Site owner: set <code>contactEmail</code> in <code>src/config.mjs</code>.)</em>`;
+  const fill = (s) =>
+    s
+      .replaceAll("{{base}}", base)
+      .replaceAll("{{siteName}}", site.name)
+      .replaceAll("{{updated}}", updated)
+      .replaceAll("{{contactBlock}}", contactBlock);
+  const body = `
+  <article class="calc-page"><div class="container">
+    <div class="breadcrumb"><a href="${base}/">Home</a> › ${p.title}</div>
+    <h1>${p.title}</h1>
+    <div class="content">${fill(p.body)}</div>
+  </div></article>`;
+  return layout({
+    title: `${p.title} – ${site.name}`,
+    description: fill(p.metaDescription),
+    canonical,
+    jsonld: [],
+    body,
+  });
+}
+
 // ---------- guides (blog) ----------
 function fmtDate(d) {
   return new Date(d + "T00:00:00").toLocaleDateString("en-US", {
@@ -288,6 +317,7 @@ function renderSitemap() {
     ...calculators.map((c) => `${site.url}/${c.slug}/`),
     site.url + "/guides/",
     ...articles.map((a) => `${site.url}/guides/${a.slug}/`),
+    ...pages.map((p) => `${site.url}/${p.slug}/`),
   ];
   const today = new Date().toISOString().slice(0, 10);
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -324,6 +354,13 @@ async function build() {
     const dir = join(DIST, "guides", a.slug);
     await mkdir(dir, { recursive: true });
     await writeFile(join(dir, "index.html"), renderArticle(a));
+  }
+
+  // Static pages (about / contact / privacy / terms)
+  for (const p of pages) {
+    const dir = join(DIST, p.slug);
+    await mkdir(dir, { recursive: true });
+    await writeFile(join(dir, "index.html"), renderPage(p));
   }
 
   await writeFile(join(DIST, "sitemap.xml"), renderSitemap());

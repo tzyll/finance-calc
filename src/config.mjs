@@ -14,6 +14,9 @@ export const site = {
   locale: "en-US",
   currency: "USD",
   author: "Finance Calc",
+  // Public contact email — required by AdSense and most ad networks. Leave empty
+  // and the Contact page shows a placeholder until you set it.
+  contactEmail: "",
   // Paste your AdSense publisher id here once approved, e.g. "ca-pub-XXXXXXXX".
   // Leave empty to render no ad slots.
   adsensePublisherId: "",
