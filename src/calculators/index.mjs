@@ -12,10 +12,14 @@ import autoLoan from "./auto-loan.mjs";
 import simpleInterest from "./simple-interest.mjs";
 import ruleOf72 from "./rule-of-72.mjs";
 import netWorth from "./net-worth.mjs";
+import emergencyFund from "./emergency-fund.mjs";
+import k401 from "./401k.mjs";
+import downPayment from "./down-payment.mjs";
 
 export const calculators = [
   compoundInterest,
   savingsGoal,
+  emergencyFund,
   roi,
   ruleOf72,
   simpleInterest,
@@ -23,7 +27,9 @@ export const calculators = [
   cd,
   netWorth,
   retirement,
+  k401,
   mortgage,
+  downPayment,
   loan,
   autoLoan,
   creditCardPayoff,
