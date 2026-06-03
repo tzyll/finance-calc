@@ -17,6 +17,7 @@ import k401 from "./401k.mjs";
 import downPayment from "./down-payment.mjs";
 import hourlyToSalary from "./hourly-to-salary.mjs";
 import budget from "./budget.mjs";
+import debtPayoff from "./debt-payoff.mjs";
 
 export const calculators = [
   compoundInterest,
@@ -37,4 +38,5 @@ export const calculators = [
   loan,
   autoLoan,
   creditCardPayoff,
+  debtPayoff,
 ];
