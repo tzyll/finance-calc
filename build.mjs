@@ -98,12 +98,44 @@ function renderHome() {
     }
     groups += `</div>`;
   }
+  const homeFaq = [
+    {
+      q: "Are these financial calculators free?",
+      a: "Yes — every calculator and guide on the site is completely free, with no account, sign-up, or download required. Just open a page and start typing your numbers.",
+    },
+    {
+      q: "Is my financial data private?",
+      a: "Completely. Every calculator runs entirely in your browser. The numbers you enter are never sent to a server or stored anywhere — they stay on your device.",
+    },
+    {
+      q: "How accurate are the calculators?",
+      a: "They use standard, published financial formulas and we show the math and assumptions on each page. Results are estimates based on your inputs and don't account for every real-world factor (such as taxes or fees unless stated), so treat them as well-informed guidance, not guarantees.",
+    },
+    {
+      q: "Do the calculators work on mobile?",
+      a: "Yes. The site is fast and fully responsive, so every calculator works on phones, tablets, and desktops without any app to install.",
+    },
+  ];
+  const faqHtml = homeFaq
+    .map((f) => `<details class="faq-item"><summary>${f.q}</summary><p>${f.a}</p></details>`)
+    .join("\n");
+
   const body = `
   <section class="hero"><div class="container">
     <h1>${site.tagline}</h1>
     <p>${site.description}</p>
   </div></section>
-  <div class="container">${groups}</div>`;
+  <div class="container">${groups}
+    <div class="content">
+      <h2>Free financial calculators for every money decision</h2>
+      <p>Whether you're planning for retirement, sizing up a mortgage, paying down debt, or just trying to make a budget stick, the right number makes the decision clearer. ${site.name} brings together ${calculators.length} free calculators and ${articles.length} plain-English guides covering saving and investing, budgeting and income, loans and debt, and retirement — all in one place, all free, all instant.</p>
+      <p>Every tool runs in your browser with no sign-up and nothing to install. Type your figures and see results update live, with clear charts and a year-by-year breakdown where it helps. Pair any calculator with our <a href="${base}/guides/">money guides</a> to understand not just the number, but what to do with it.</p>
+    </div>
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      ${faqHtml}
+    </section>
+  </div>`;
 
   const jsonld = [
     {
@@ -112,6 +144,15 @@ function renderHome() {
       name: site.name,
       url: site.url + "/",
       description: site.description,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: homeFaq.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
     },
   ];
   return layout({
