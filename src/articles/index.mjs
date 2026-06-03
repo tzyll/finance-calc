@@ -19,9 +19,11 @@ import howTaxBracketsWork from "./how-tax-brackets-work.mjs";
 import whatIsGoodCreditScore from "./what-is-a-good-credit-score.mjs";
 import stopPaycheckToPaycheck from "./stop-living-paycheck-to-paycheck.mjs";
 import payOffDebtOrInvest from "./pay-off-debt-or-invest.mjs";
+import dollarCostAveraging from "./dollar-cost-averaging.mjs";
 
 // Newest first.
 export const articles = [
+  dollarCostAveraging,
   payOffDebtOrInvest,
   stopPaycheckToPaycheck,
   whatIsGoodCreditScore,
