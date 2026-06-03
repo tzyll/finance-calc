@@ -22,6 +22,7 @@ import debtPayoff from "./debt-payoff.mjs";
 import rentVsBuy from "./rent-vs-buy.mjs";
 import studentLoan from "./student-loan.mjs";
 import fire from "./fire.mjs";
+import rothIra from "./roth-ira.mjs";
 import investment from "./investment.mjs";
 import millionaire from "./millionaire.mjs";
 import apy from "./apy.mjs";
@@ -45,6 +46,7 @@ export const calculators = [
   retirement,
   fire,
   k401,
+  rothIra,
   mortgage,
   downPayment,
   loan,
