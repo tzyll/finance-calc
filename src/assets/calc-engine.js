@@ -19,15 +19,16 @@
   var numFmt = new Intl.NumberFormat(C.locale || "en-US");
   var ctx = {
     money: function (n) {
-      return moneyFmt.format(Math.round(n));
+      return isFinite(n) ? moneyFmt.format(Math.round(n)) : "—";
     },
     num: function (n, d) {
+      if (!isFinite(n)) return "—";
       return new Intl.NumberFormat(C.locale || "en-US", {
         maximumFractionDigits: d == null ? 2 : d,
       }).format(n);
     },
     pct: function (n) {
-      return ctx.num(n, 2) + "%";
+      return isFinite(n) ? ctx.num(n, 2) + "%" : "—";
     },
   };
 
@@ -172,6 +173,12 @@
       padB = 40;
     var plotW = W - padL - padR,
       plotH = H - padT - padB;
+    // sanitize: replace any non-finite points with 0 so the SVG never breaks
+    chart.series.forEach(function (s) {
+      s.points = s.points.map(function (p) {
+        return isFinite(p) ? p : 0;
+      });
+    });
     var n = chart.series[0].points.length;
     var max = 0;
     chart.series.forEach(function (s) {
@@ -179,7 +186,7 @@
         if (p > max) max = p;
       });
     });
-    if (max <= 0) max = 1;
+    if (!(max > 0)) max = 1;
     // nice round max
     var pow = Math.pow(10, Math.floor(Math.log10(max)));
     max = Math.ceil(max / pow) * pow;
@@ -190,10 +197,15 @@
     function y(val) {
       return padT + plotH - (val / max) * plotH;
     }
+    function trimNum(x) {
+      return ctx.num(x, 1).replace(/\.0$/, "");
+    }
     function fmtY(val) {
       if (chart.yFormat === "money") {
-        if (val >= 1000000) return ctx.money(val / 1000000).replace(/\.00$/, "") + "M";
-        if (val >= 1000) return ctx.money(val / 1000).replace(/\.00$/, "") + "k";
+        var a = Math.abs(val),
+          sign = val < 0 ? "-" : "";
+        if (a >= 1000000) return sign + "$" + trimNum(a / 1000000) + "M";
+        if (a >= 1000) return sign + "$" + trimNum(a / 1000) + "k";
         return ctx.money(val);
       }
       return ctx.num(val, 0);

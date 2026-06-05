@@ -18,6 +18,16 @@ export default {
     { id: "principal", label: "Starting amount (optional)", type: "number", default: 10000, min: 0, step: 100, prefix: "$" },
   ],
   compute: function (v, ctx) {
+    if (v.rate <= 0) {
+      return {
+        summary: [
+          { label: "Years to double (Rule of 72)", value: "—", primary: true },
+          { label: "Exact doubling time", value: "—" },
+          { label: "Value after that time", value: ctx.money(v.principal) },
+        ],
+        note: "With a 0% return your money never doubles. Enter a positive annual return to see the doubling time.",
+      };
+    }
     var rule72 = 72 / v.rate;
     var exact = Math.log(2) / Math.log(1 + v.rate / 100);
     var years = Math.min(80, Math.ceil(exact * 3));

@@ -15,6 +15,14 @@ const base = site.basePath || ""; // URL prefix for internal links (e.g. "/finan
 const assetVersion = Date.now(); // cache-bust CSS/JS so a deploy serves fresh assets
 
 // ---------- shared layout ----------
+// Escape text for safe use in HTML element text and attribute values.
+function esc(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 function adScript() {
   if (!site.adsensePublisherId) return "";
   return `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${site.adsensePublisherId}" crossorigin="anonymous"></script>`;
@@ -32,19 +40,21 @@ function ctaBlock(c) {
 
 function layout({ title, description, canonical, jsonld, body }) {
   const ld = (jsonld || [])
-    .map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`)
+    .map((o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, "\\u003c")}</script>`)
     .join("\n");
+  const t = esc(title);
+  const d = esc(description);
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title}</title>
-<meta name="description" content="${description}">
+<title>${t}</title>
+<meta name="description" content="${d}">
 <link rel="canonical" href="${canonical}">
 <meta property="og:type" content="website">
-<meta property="og:title" content="${title}">
-<meta property="og:description" content="${description}">
+<meta property="og:title" content="${t}">
+<meta property="og:description" content="${d}">
 <meta property="og:url" content="${canonical}">
 <meta property="og:site_name" content="${site.name}">
 <meta property="og:image" content="${site.url}/assets/og.png">
@@ -95,7 +105,7 @@ function renderHome() {
     if (!items.length) continue;
     groups += `<div class="cat-group" id="cat-${key}">${cat.name}</div><div class="grid">`;
     for (const c of items) {
-      const blurb = c.intro.replace(/<[^>]+>/g, "").trim().split(/(?<=\.)\s/)[0];
+      const blurb = c.intro.replace(/<[^>]+>/g, "").trim().split(/(?<=[.?!])\s/)[0];
       groups += `<a class="card" href="${base}/${c.slug}/">
         <span class="cat">${cat.name}</span>
         <h3>${c.title}</h3>
