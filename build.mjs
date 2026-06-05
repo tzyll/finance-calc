@@ -64,8 +64,11 @@ ${adScript()}
   <a class="logo" href="${base}/">Finance<span>Calc</span></a>
   <nav class="nav">
     <a href="${base}/">Home</a>
+    ${Object.entries(categories)
+      .sort((a, b) => a[1].order - b[1].order)
+      .map(([key, cat]) => `<a class="nav-cat" href="${base}/#cat-${key}">${cat.name}</a>`)
+      .join("\n    ")}
     <a href="${base}/guides/">Guides</a>
-    ${calculators.map((c) => `<a href="${base}/${c.slug}/">${c.title.replace(" Calculator", "")}</a>`).join("\n    ")}
   </nav>
 </div></header>
 <main>
@@ -89,7 +92,7 @@ function renderHome() {
   for (const [key, cat] of catOrder) {
     const items = calculators.filter((c) => c.category === key);
     if (!items.length) continue;
-    groups += `<div class="cat-group">${cat.name}</div><div class="grid">`;
+    groups += `<div class="cat-group" id="cat-${key}">${cat.name}</div><div class="grid">`;
     for (const c of items) {
       const blurb = c.intro.replace(/<[^>]+>/g, "").trim().split(/(?<=\.)\s/)[0];
       groups += `<a class="card" href="${base}/${c.slug}/">
