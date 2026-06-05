@@ -40,8 +40,10 @@ a:hover { text-decoration: underline; }
   min-height: 60px;
   padding-top: 8px;
   padding-bottom: 8px;
+  max-width: 960px; /* wider than content so the nav fits on one line */
 }
 .nav { display: flex; flex-wrap: wrap; align-items: center; }
+.nav a { white-space: nowrap; }
 /* offset anchor jumps so the sticky header doesn't cover the heading */
 .cat-group[id] { scroll-margin-top: 80px; }
 .logo { font-weight: 800; font-size: 1.15rem; color: var(--text); letter-spacing: -0.02em; }

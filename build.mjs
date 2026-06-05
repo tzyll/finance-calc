@@ -66,7 +66,7 @@ ${adScript()}
     <a href="${base}/">Home</a>
     ${Object.entries(categories)
       .sort((a, b) => a[1].order - b[1].order)
-      .map(([key, cat]) => `<a class="nav-cat" href="${base}/#cat-${key}">${cat.name}</a>`)
+      .map(([key, cat]) => `<a class="nav-cat" href="${base}/#cat-${key}">${cat.name.split(" & ")[0]}</a>`)
       .join("\n    ")}
     <a href="${base}/guides/">Guides</a>
   </nav>
