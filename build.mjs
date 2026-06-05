@@ -1,6 +1,23 @@
-import { mkdir, writeFile, rm, copyFile, readdir } from "node:fs/promises";
+/*
+ * Static site generator. Design constraints (intentional, not oversights):
+ *
+ * 1. Trust boundary: calculator/article/page MODULES are trusted source code,
+ *    so their HTML-bearing fields (intro, content, body, faq) are interpolated
+ *    raw. Only machine-set head fields (title, description) are escaped via esc().
+ *    There is no untrusted user input at build time. The client engine separately
+ *    escapes any *runtime* output (table cells, chart labels) it renders.
+ *
+ * 2. compute() functions are serialized with .toString() and re-evaluated in the
+ *    browser (see calc-engine.js). They must therefore be SELF-CONTAINED pure
+ *    functions: no imports, no closures, no shared helpers. That is why payment/
+ *    amortization loops are repeated per calculator — they cannot share a helper
+ *    without shipping a runtime lib and injecting it into compute's scope. The
+ *    test suite (test/) locks each formula's known-answer output as the safety net.
+ */
+import { mkdir, writeFile, rm, copyFile, readdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { createHash } from "node:crypto";
 import { site, categories, affiliateLinks } from "./src/config.mjs";
 import { calculators } from "./src/calculators/index.mjs";
 import { articles } from "./src/articles/index.mjs";
@@ -12,7 +29,16 @@ const ASSETS = join(__dirname, "src", "assets");
 
 const bySlug = Object.fromEntries(calculators.map((c) => [c.slug, c]));
 const base = site.basePath || ""; // URL prefix for internal links (e.g. "/finance-calc")
-const assetVersion = Date.now(); // cache-bust CSS/JS so a deploy serves fresh assets
+// Cache-bust CSS/JS with a content hash so the query string only changes when the
+// asset actually changes (deterministic build, no needless cache invalidation).
+let assetVersion = "0";
+async function computeAssetVersion() {
+  const hash = createHash("sha256");
+  for (const f of ["styles.css", "calc-engine.js"]) {
+    hash.update(await readFile(join(ASSETS, f)));
+  }
+  assetVersion = hash.digest("hex").slice(0, 12);
+}
 
 // ---------- shared layout ----------
 // Escape text for safe use in HTML element text and attribute values.
@@ -392,6 +418,7 @@ function renderRobots() {
 
 // ---------- build ----------
 async function build() {
+  await computeAssetVersion();
   await rm(DIST, { recursive: true, force: true });
   await mkdir(DIST, { recursive: true });
   await mkdir(join(DIST, "assets"), { recursive: true });

@@ -45,7 +45,7 @@ export default {
       if (taxable > lo) fed += (Math.min(taxable, hi) - lo) * brackets[i][1];
     }
 
-    var ss = Math.min(gross, 176100) * 0.062;
+    var ss = Math.min(gross, 184500) * 0.062; // 2026 Social Security wage base
     var medicare = gross * 0.0145;
     var addlThreshold = married ? 250000 : 200000;
     if (gross > addlThreshold) medicare += (gross - addlThreshold) * 0.009;
@@ -77,7 +77,7 @@ export default {
         ],
       },
       note:
-        "Estimate using 2026 US federal tax brackets, Social Security (6.2% to $176,100), and Medicare (1.45%). State tax is the flat rate you enter — actual state and local taxes vary. Doesn't include other deductions or tax credits.",
+        "Estimate using 2026 US federal tax brackets, Social Security (6.2% to $184,500), and Medicare (1.45%). State tax is the flat rate you enter — actual state and local taxes vary. Doesn't include other deductions or tax credits.",
     };
   },
   content: `

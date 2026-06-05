@@ -1,6 +1,12 @@
 /* Generic client-side calculator engine. Zero dependencies.
    Reads window.__CALC__ = { inputs, computeSrc, locale, currency } and wires up
-   a live form -> results -> chart -> table on the page. */
+   a live form -> results -> chart -> table on the page.
+
+   computeSrc is a calculator's compute() serialized at build time and rebuilt
+   here with new Function (so each calculator must be a self-contained pure fn).
+   All runtime output rendered via innerHTML (table cells, chart labels/legend)
+   is passed through esc() so a future calculator returning user-derived strings
+   can't inject markup. compute() errors are logged, not swallowed silently. */
 (function () {
   "use strict";
   var C = window.__CALC__;
@@ -11,12 +17,18 @@
 
   var compute = new Function("return (" + C.computeSrc + ")")();
 
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
   var moneyFmt = new Intl.NumberFormat(C.locale || "en-US", {
     style: "currency",
     currency: C.currency || "USD",
     maximumFractionDigits: 0,
   });
-  var numFmt = new Intl.NumberFormat(C.locale || "en-US");
   var ctx = {
     money: function (n) {
       return isFinite(n) ? moneyFmt.format(Math.round(n)) : "—";
@@ -146,13 +158,13 @@
     }
     var html = '<table class="data-table"><thead><tr>';
     t.columns.forEach(function (c) {
-      html += "<th>" + c + "</th>";
+      html += "<th>" + esc(c) + "</th>";
     });
     html += "</tr></thead><tbody>";
     t.rows.forEach(function (r) {
       html += "<tr>";
       r.forEach(function (cell) {
-        html += "<td>" + cell + "</td>";
+        html += "<td>" + esc(cell) + "</td>";
       });
       html += "</tr>";
     });
@@ -250,7 +262,7 @@
         '" y="' +
         (H - padB + 20) +
         '" class="axis-label x">' +
-        (chart.xLabels ? chart.xLabels[i] : i) +
+        esc(chart.xLabels ? chart.xLabels[i] : i) +
         "</text>";
     }
     // series
@@ -287,9 +299,9 @@
     chart.series.forEach(function (s) {
       legend +=
         '<span class="legend-item"><span class="swatch" style="background:' +
-        s.color +
+        esc(s.color) +
         '"></span>' +
-        s.name +
+        esc(s.name) +
         "</span>";
     });
     legend += "</div>";
@@ -303,6 +315,8 @@
     try {
       out = compute(v, ctx);
     } catch (err) {
+      // Surface real bugs to the console; transient mid-typing errors are harmless.
+      if (window.console && console.error) console.error("calc compute error:", err);
       return;
     }
     renderSummary(out.summary || []);
