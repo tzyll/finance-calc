@@ -12,6 +12,7 @@ const ASSETS = join(__dirname, "src", "assets");
 
 const bySlug = Object.fromEntries(calculators.map((c) => [c.slug, c]));
 const base = site.basePath || ""; // URL prefix for internal links (e.g. "/finance-calc")
+const assetVersion = Date.now(); // cache-bust CSS/JS so a deploy serves fresh assets
 
 // ---------- shared layout ----------
 function adScript() {
@@ -55,7 +56,7 @@ function layout({ title, description, canonical, jsonld, body }) {
 <meta name="google-site-verification" content="ftMnUg5gK7y0CV8fVTbuecfS5BoRGE9JjOOCAaeH07o">
 <meta name="theme-color" content="#2563eb">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3E$%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="${base}/assets/styles.css">
+<link rel="stylesheet" href="${base}/assets/styles.css?v=${assetVersion}">
 ${ld}
 ${adScript()}
 </head>
@@ -212,7 +213,7 @@ function renderCalc(c) {
     ${related ? `<section class="related"><h2>Related calculators</h2><div class="related-list">${related}</div></section>` : ""}
   </div></article>
   <script>window.__CALC__=${JSON.stringify(calcData)};</script>
-  <script src="${base}/assets/calc-engine.js" defer></script>`;
+  <script src="${base}/assets/calc-engine.js?v=${assetVersion}" defer></script>`;
 
   const jsonld = [
     {
