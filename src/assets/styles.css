@@ -42,13 +42,13 @@ a:hover { text-decoration: underline; }
   padding-bottom: 8px;
   max-width: 960px; /* wider than content so the nav fits on one line */
 }
-.nav { display: flex; flex-wrap: wrap; align-items: center; }
+.nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; }
 .nav a { white-space: nowrap; }
 /* offset anchor jumps so the sticky header doesn't cover the heading */
 .cat-group[id] { scroll-margin-top: 80px; }
 .logo { font-weight: 800; font-size: 1.15rem; color: var(--text); letter-spacing: -0.02em; }
 .logo span { color: var(--brand); }
-.nav a { color: var(--muted); font-weight: 500; font-size: 0.95rem; margin-left: 18px; }
+.nav a { color: var(--muted); font-weight: 500; font-size: 0.95rem; }
 .nav a:hover { color: var(--text); text-decoration: none; }
 
 /* Hero */
@@ -210,5 +210,7 @@ a:hover { text-decoration: underline; }
   .grid { grid-template-columns: 1fr; }
   .calc-form { grid-template-columns: 1fr; }
   .summary { grid-template-columns: 1fr; }
-  .nav-cat { display: none; }
+  .site-header .container { flex-direction: column; align-items: center; gap: 6px; }
+  .nav { justify-content: center; gap: 4px 14px; }
+  .nav a { font-size: 0.88rem; }
 }
